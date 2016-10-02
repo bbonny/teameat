@@ -1,0 +1,11 @@
+.header { /* stylelint-disable */
+  height: 50px;
+  background-color: darkgray;
+}
+.brand {
+  text-align: center;
+  padding-top: 10px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}

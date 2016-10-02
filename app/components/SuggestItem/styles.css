@@ -1,0 +1,21 @@
+.suggestItem { /* stylelint-disable */
+  font-size: 18px;
+  font-size: 1rem;
+  padding: .5em .65em;
+  cursor: pointer;
+}
+
+.suggestItem:hover,
+.suggestItem:focus {
+  background: #f5f5f5;
+}
+
+.suggestItem--active {
+  background: #267dc0;
+  color: #fff;
+}
+
+.suggestItem--active:hover,
+.suggestItem--active:focus {
+  background: #ccc;
+}

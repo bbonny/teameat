@@ -4,10 +4,11 @@
   "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mxstbr/react-boilerplate.git"
+    "url": "git://github.com:bbonny/teameat.git"
   },
   "engines": {
-    "npm": ">=3"
+    "npm": "3.10.3",
+    "node": "6.4.0"
   },
   "author": "Max Stoiber",
   "license": "MIT",
@@ -208,8 +209,8 @@
   "dependencies": {
     "babel-polyfill": "6.13.0",
     "chalk": "1.1.3",
-    "cross-env": "2.0.1",
     "compression": "1.6.2",
+    "cross-env": "2.0.1",
     "express": "4.14.0",
     "fontfaceobserver": "2.0.4",
     "immutable": "3.8.1",
@@ -221,8 +222,8 @@
     "react": "15.3.1",
     "react-dom": "15.3.1",
     "react-helmet": "3.1.0",
-    "react-redux": "4.4.5",
     "react-intl": "2.1.5",
+    "react-redux": "4.4.5",
     "react-router": "2.8.1",
     "react-router-redux": "4.0.5",
     "react-router-scroll": "0.3.2",

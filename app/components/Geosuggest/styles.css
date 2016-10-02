@@ -1,0 +1,9 @@
+.geosuggest { /* stylelint-disable */
+  font-size: 18px;
+  font-size: 1rem;
+  position: relative;
+  width: 50%;
+  min-width: 300px;
+  margin: 1em auto;
+  text-align: left;
+}

@@ -1,0 +1,13 @@
+.input { /* stylelint-disable */
+  width: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 1px #3d464d;
+  padding: .5em 1em;
+  -webkit-transition: border 0.2s, box-shadow 0.2s;
+          transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  border-color: #267dc0;
+  box-shadow: 0 0 0 transparent;
+}
