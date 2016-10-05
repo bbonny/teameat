@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
+import promiseMiddleware from './promiseMiddleware';
 import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -16,6 +17,7 @@ export default function configureStore(initialState = {}, history) {
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
+    promiseMiddleware(),
     sagaMiddleware,
     routerMiddleware(history),
   ];
@@ -28,7 +30,8 @@ export default function configureStore(initialState = {}, history) {
   const store = createStore(
     createReducer(),
     fromJS(initialState),
-    compose(...enhancers)
+    compose(
+      ...enhancers)
   );
 
   // Create hook for async sagas

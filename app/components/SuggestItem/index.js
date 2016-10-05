@@ -12,13 +12,6 @@ import shallowCompare from 'react-addons-shallow-compare';
 import styles from './styles.css';
 
 class SuggestItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  propTypes = {
-    isActive: React.PropTypes.bool,
-    suggest: React.PropTypes.bool,
-    onSelect: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onMouseOut: React.PropTypes.func,
-  };
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -44,5 +37,13 @@ class SuggestItem extends React.Component { // eslint-disable-line react/prefer-
     );
   }
 }
+
+SuggestItem.propTypes = {
+  isActive: React.PropTypes.bool,
+  suggest: React.PropTypes.object,
+  onSelect: React.PropTypes.func,
+  onMouseDown: React.PropTypes.func,
+  onMouseOut: React.PropTypes.func,
+};
 
 export default SuggestItem;

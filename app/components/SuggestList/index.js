@@ -14,14 +14,6 @@ import SuggestItem from 'components/SuggestItem';
 import styles from './styles.css';
 
 class SuggestList extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  propTypes = {
-    activeSuggest: React.PropTypes.bool,
-    isHidden: React.PropTypes.bool,
-    onSuggestMouseDown: React.PropTypes.func,
-    onSuggestMouseOut: React.PropTypes.func,
-    onSuggestSelect: React.PropTypes.func,
-    suggests: React.PropTypes.array,
-  };
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -54,5 +46,14 @@ class SuggestList extends React.Component { // eslint-disable-line react/prefer-
       </ul>);
   }
 }
+
+SuggestList.propTypes = {
+  activeSuggest: React.PropTypes.bool,
+  isHidden: React.PropTypes.bool,
+  onSuggestMouseDown: React.PropTypes.func,
+  onSuggestMouseOut: React.PropTypes.func,
+  onSuggestSelect: React.PropTypes.func,
+  suggests: React.PropTypes.array,
+};
 
 export default SuggestList;

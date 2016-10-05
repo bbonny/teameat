@@ -12,10 +12,6 @@ import SuggestList from 'components/SuggestList';
 import styles from './styles.css';
 
 class Geosuggest extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  propTypes = {
-    autoActivateFirstSuggest: React.PropTypes.bool,
-    country: React.PropTypes.string,
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -185,6 +181,10 @@ class Geosuggest extends React.Component { // eslint-disable-line react/prefer-s
       };
     }
 
+    if (suggest) {
+      this.props.onSelect(newSuggest);
+    }
+
     this.setState({
       isSuggestsHidden: true,
       userInput: newSuggest.label,
@@ -252,5 +252,11 @@ class Geosuggest extends React.Component { // eslint-disable-line react/prefer-s
     );
   }
 }
+
+Geosuggest.propTypes = {
+  autoActivateFirstSuggest: React.PropTypes.bool,
+  country: React.PropTypes.string,
+  onSelect: React.PropTypes.func,
+};
 
 export default Geosuggest;

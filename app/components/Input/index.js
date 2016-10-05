@@ -11,15 +11,6 @@ import shallowCompare from 'react-addons-shallow-compare';
 import styles from './styles.css';
 
 class Input extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  propTypes = {
-    value: React.PropTypes.objet,
-    onBlur: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onNext: React.PropTypes.func,
-    onPrev: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
-  };
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -62,7 +53,7 @@ class Input extends React.Component { // eslint-disable-line react/prefer-statel
         type="text"
         autoComplete="off"
         ref={(ref) => { this.textInput = ref; }}
-        value={this.props.value}
+        value={this.props.value || ''}
         onKeyDown={this.onInputKeyDown}
         onChange={this.onChange}
         onFocus={this.onFocus}
@@ -71,5 +62,15 @@ class Input extends React.Component { // eslint-disable-line react/prefer-statel
     );
   }
 }
+
+Input.propTypes = {
+  value: React.PropTypes.string,
+  onBlur: React.PropTypes.func,
+  onChange: React.PropTypes.func,
+  onFocus: React.PropTypes.func,
+  onNext: React.PropTypes.func,
+  onPrev: React.PropTypes.func,
+  onSelect: React.PropTypes.func,
+};
 
 export default Input;
