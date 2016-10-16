@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'app.containers.Header.header',
     defaultMessage: 'TEAMEAT',
   },
+  signin: {
+    id: 'app.containers.Header.signin',
+    defaultMessage: 'Sign In',
+  },
 });

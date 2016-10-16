@@ -28,6 +28,15 @@ import { translationMessages } from './i18n';
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
+const firebase = window.firebase;
+firebase.initializeApp({
+  apiKey: 'AIzaSyA9or1no9MvRtDXfsB3EzN4gk5rfws3FYo',
+  authDomain: 'teameat-145116.firebaseapp.com',
+  databaseURL: 'https://teameat-145116.firebaseio.com',
+  storageBucket: 'teameat-145116.appspot.com',
+  messagingSenderId: '1010597672570',
+});
+
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
@@ -51,6 +60,9 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+import { actions } from './reducers/auth';
+
+actions.initAuthRequest(store.dispatch)();
 
 const render = (translatedMessages) => {
   ReactDOM.render(

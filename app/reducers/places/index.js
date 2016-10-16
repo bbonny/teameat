@@ -14,14 +14,6 @@ const GET_PLACES_FAILURE = 'GET_PLACES_FAILURE';
 
 const firebase = window.firebase;
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyA9or1no9MvRtDXfsB3EzN4gk5rfws3FYo',
-  authDomain: 'teameat-145116.firebaseapp.com',
-  databaseURL: 'https://teameat-145116.firebaseio.com',
-  storageBucket: 'teameat-145116.appspot.com',
-  messagingSenderId: '1010597672570',
-});
-
 function addPlaceRequest(dispatch) {
   return (place) => {
     const key = firebase.database().ref().child('restaurants').push().key;
