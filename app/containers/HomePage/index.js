@@ -2,11 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import Geosuggest from 'components/Geosuggest';
 import { actions } from '../../reducers/places';
-import { createSelector } from 'reselect';
-import { selectPlaces } from './selectors';
 
 import styles from './styles.css';
 
@@ -15,9 +14,15 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
     this.props.getPlacesRequest();
   }
   componentWillReceiveProps(newProps) {
-    if (this.props.addPlace && this.props.addPlace.sending && !newProps.addPlace.sending) {
+    if ((this.props.addPlace && this.props.addPlace.sending && !newProps.addPlace.sending) ||
+      (this.props.deletePlace && this.props.deletePlace.sending && !newProps.deletePlace.sending)
+    ) {
       this.props.getPlacesRequest();
     }
+  }
+  handleDelete = (event) => {
+    event.preventDefault();
+    this.props.deletePlaceRequest(event.currentTarget.id);
   }
   render() {
     return (
@@ -28,7 +33,10 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         />
         <ul>
         { this.props.getPlaces && this.props.getPlaces.data && _.map(this.props.getPlaces.data, (place, index) => (
-          <li key={index}>{ place.place && place.place.label }</li>
+          <li key={index}>
+            { place.place && place.place.label }
+            <button id={index} onClick={this.handleDelete}>x</button>
+          </li>
         )) }
         </ul>
       </div>
@@ -38,15 +46,18 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 
 HomePage.propTypes = {
   addPlaceRequest: React.PropTypes.func,
+  deletePlaceRequest: React.PropTypes.func,
   getPlacesRequest: React.PropTypes.func,
   addPlace: React.PropTypes.object,
+  deletePlace: React.PropTypes.object,
   getPlaces: React.PropTypes.object,
 };
 
 const mapStateToProps = createSelector(
-  selectPlaces(),
+  (state) => state.get('places'),
   (places) => ({
     addPlace: places.addPlace,
+    deletePlace: places.deletePlace,
     getPlaces: places.getPlaces,
   })
 );
@@ -54,6 +65,7 @@ const mapStateToProps = createSelector(
 function mapDispatchToProps(dispatch) {
   return {
     addPlaceRequest: actions.addPlaceRequest(dispatch),
+    deletePlaceRequest: actions.deletePlaceRequest(dispatch),
     getPlacesRequest: actions.getPlacesRequest(dispatch),
   };
 }

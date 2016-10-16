@@ -4,11 +4,16 @@ const ADD_PLACE_SENDING = 'ADD_PLACE_SENDING';
 const ADD_PLACE_SUCCESS = 'ADD_PLACE_SUCCESS';
 const ADD_PLACE_FAILURE = 'ADD_PLACE_FAILURE';
 
+const DELETE_PLACE_SENDING = 'DELETE_PLACE_SENDING';
+const DELETE_PLACE_SUCCESS = 'DELETE_PLACE_SUCCESS';
+const DELETE_PLACE_FAILURE = 'DELETE_PLACE_FAILURE';
+
 const GET_PLACES_SENDING = 'GET_PLACES_SENDING';
 const GET_PLACES_SUCCESS = 'GET_PLACES_SUCCESS';
 const GET_PLACES_FAILURE = 'GET_PLACES_FAILURE';
 
 const firebase = window.firebase;
+
 firebase.initializeApp({
   apiKey: 'AIzaSyA9or1no9MvRtDXfsB3EzN4gk5rfws3FYo',
   authDomain: 'teameat-145116.firebaseapp.com',
@@ -31,6 +36,16 @@ function addPlaceRequest(dispatch) {
   };
 }
 
+function deletePlaceRequest(dispatch) {
+  return (placeId) => {
+    const action = {
+      types: [DELETE_PLACE_SENDING, DELETE_PLACE_SUCCESS, DELETE_PLACE_FAILURE],
+      promise: firebase.database().ref(`/restaurants/${placeId}`).remove(),
+    };
+    dispatch(action);
+  };
+}
+
 function getPlacesRequest(dispatch) {
   return () => {
     const action = {
@@ -43,6 +58,7 @@ function getPlacesRequest(dispatch) {
 
 export const actions = {
   addPlaceRequest,
+  deletePlaceRequest,
   getPlacesRequest,
 };
 
@@ -68,6 +84,30 @@ function placesReducer(state = initialState, action) {
       return {
         ...state,
         addPlace: {
+          error: 'error',
+          sending: false,
+        },
+      };
+    case DELETE_PLACE_SENDING:
+      return {
+        ...state,
+        deletePlace: {
+          error: '',
+          sending: true,
+        },
+      };
+    case DELETE_PLACE_SUCCESS:
+      return {
+        ...state,
+        deletePlace: {
+          error: '',
+          sending: false,
+        },
+      };
+    case DELETE_PLACE_FAILURE:
+      return {
+        ...state,
+        deletePlace: {
           error: 'error',
           sending: false,
         },
@@ -105,14 +145,18 @@ function placesReducer(state = initialState, action) {
 }
 
 const initialState = fromJS({
+  addPlace: {
+    error: '',
+    sending: false,
+  },
+  deletePlace: {
+    error: '',
+    sending: false,
+  },
   getPlaces: {
     error: '',
     sending: false,
     data: [],
-  },
-  addPlace: {
-    error: '',
-    sending: false,
   },
 });
 
