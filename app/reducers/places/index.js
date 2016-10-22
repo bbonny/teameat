@@ -14,11 +14,17 @@ const GET_PLACES_FAILURE = 'GET_PLACES_FAILURE';
 
 const firebase = window.firebase;
 
+const getUserId = () => {
+  let uid = 'noUserId';
+  const user = firebase.auth().currentUser;
+  if (user) { uid = user.uid; }
+  return uid;
+};
+
 function addPlaceRequest(dispatch) {
   return (place) => {
-    const key = firebase.database().ref().child('restaurants').push().key;
     const updates = {
-      [`/restaurants/${key}`]: { place },
+      [`/users/${getUserId()}/restaurants/${place.placeId}`]: { place },
     };
     const action = {
       types: [ADD_PLACE_SENDING, ADD_PLACE_SUCCESS, ADD_PLACE_FAILURE],
@@ -32,7 +38,7 @@ function deletePlaceRequest(dispatch) {
   return (placeId) => {
     const action = {
       types: [DELETE_PLACE_SENDING, DELETE_PLACE_SUCCESS, DELETE_PLACE_FAILURE],
-      promise: firebase.database().ref(`/restaurants/${placeId}`).remove(),
+      promise: firebase.database().ref(`/users/${getUserId()}/restaurants/${placeId}`).remove(),
     };
     dispatch(action);
   };
@@ -42,7 +48,7 @@ function getPlacesRequest(dispatch) {
   return () => {
     const action = {
       types: [GET_PLACES_SENDING, GET_PLACES_SUCCESS, GET_PLACES_FAILURE],
-      promise: firebase.database().ref('/restaurants/').once('value'),
+      promise: firebase.database().ref(`/users/${getUserId()}/restaurants/`).once('value'),
     };
     dispatch(action);
   };

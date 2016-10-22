@@ -60,11 +60,19 @@ function authReducer(state = initialState, action) {
     case AUTH_SIGN_IN_SENDING:
       return {
         ...state,
+        signIn: {
+          sending: true,
+          error: '',
+        },
       };
     case AUTH_SIGN_IN_SUCCESS:
       return {
         ...state,
         user: action.result.user,
+        signIn: {
+          sending: false,
+          error: '',
+        },
       };
     case AUTH_SIGN_IN_FAILURE:
       return {
@@ -77,15 +85,27 @@ function authReducer(state = initialState, action) {
     case AUTH_SIGN_OUT_SENDING:
       return {
         ...state,
+        signOut: {
+          sending: true,
+          error: '',
+        },
       };
     case AUTH_SIGN_OUT_SUCCESS:
       return {
         ...state,
         user: undefined,
+        signOut: {
+          sending: false,
+          error: '',
+        },
       };
     case AUTH_SIGN_OUT_FAILURE:
       return {
         ...state,
+        signOut: {
+          sending: false,
+          error: '',
+        },
       };
     default:
       return state;
@@ -95,6 +115,10 @@ function authReducer(state = initialState, action) {
 const initialState = fromJS({
   user: undefined,
   signIn: {
+    error: '',
+    sending: false,
+  },
+  signOut: {
     error: '',
     sending: false,
   },

@@ -15,7 +15,10 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
   }
   componentWillReceiveProps(newProps) {
     if ((this.props.addPlace && this.props.addPlace.sending && !newProps.addPlace.sending) ||
-      (this.props.deletePlace && this.props.deletePlace.sending && !newProps.deletePlace.sending)
+      (this.props.deletePlace && this.props.deletePlace.sending && !newProps.deletePlace.sending) ||
+      (this.props.signIn && this.props.signIn.sending && !newProps.signIn.sending) ||
+      (this.props.signOut && this.props.signOut.sending && !newProps.signOut.sending) ||
+      (this.props.user !== newProps.user)
     ) {
       this.props.getPlacesRequest();
     }
@@ -35,7 +38,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         { this.props.getPlaces && this.props.getPlaces.data && _.map(this.props.getPlaces.data, (place, index) => (
           <li key={index}>
             { place.place && place.place.label }
-            <button id={index} onClick={this.handleDelete}>x</button>
+            <button id={place.place.placeId} onClick={this.handleDelete}>x</button>
           </li>
         )) }
         </ul>
@@ -51,14 +54,23 @@ HomePage.propTypes = {
   addPlace: React.PropTypes.object,
   deletePlace: React.PropTypes.object,
   getPlaces: React.PropTypes.object,
+  signIn: React.PropTypes.object,
+  signOut: React.PropTypes.object,
+  user: React.PropTypes.object,
 };
 
 const mapStateToProps = createSelector(
-  (state) => state.get('places'),
-  (places) => ({
+  (state) => ({
+    places: state.get('places'),
+    auth: state.get('auth'),
+  }),
+  ({ places, auth }) => ({
     addPlace: places.addPlace,
     deletePlace: places.deletePlace,
     getPlaces: places.getPlaces,
+    signIn: auth.signIn,
+    signOut: auth.signOut,
+    user: auth.user,
   })
 );
 
