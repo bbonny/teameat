@@ -37,8 +37,8 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         <ul>
         { this.props.getPlaces && this.props.getPlaces.data && _.map(this.props.getPlaces.data, (place, index) => (
           <li key={index}>
-            { place.place && place.place.label }
-            <button id={place.place.placeId} onClick={this.handleDelete}>x</button>
+            { place && place.label }
+            <button id={place.placeId} onClick={this.handleDelete}>x</button>
           </li>
         )) }
         </ul>

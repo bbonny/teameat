@@ -13,7 +13,7 @@
   color: white;
   cursor: pointer;
 }
-.signIn, .userName {
+.goToHomePageButton, .signIn, .userName {
   text-align: center;
   font-size: 15px;
   color: white;

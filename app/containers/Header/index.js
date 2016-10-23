@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { actions } from '../../reducers/auth';
+import { push } from 'react-router-redux';
 
 import messages from './messages';
 import styles from './styles.css';
@@ -24,11 +25,20 @@ export class Header extends React.Component { // eslint-disable-line react/prefe
     event.preventDefault();
     this.props.signOutAuthRequest();
   }
+  goToHomePage = () => {
+    this.props.dispatch(push('/'));
+  }
   render() {
     return (
       <div className={styles.header}>
         <div className={styles.brand}>
-          <FormattedMessage {...messages.header} />
+          <FormattedMessage {...messages.header}>
+            {(message) =>
+              <button className={styles.goToHomePageButton} onClick={this.goToHomePage}>
+                { message }
+              </button>
+            }
+          </FormattedMessage>
         </div>
         { this.props.user
         ? (
@@ -46,6 +56,7 @@ export class Header extends React.Component { // eslint-disable-line react/prefe
 }
 
 Header.propTypes = {
+  dispatch: React.PropTypes.func,
   signInAuthRequest: React.PropTypes.func,
   signOutAuthRequest: React.PropTypes.func,
   user: React.PropTypes.object,
@@ -60,6 +71,7 @@ const mapStateToProps = createSelector(
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     signInAuthRequest: actions.signInAuthRequest(dispatch),
     signOutAuthRequest: actions.signOutAuthRequest(dispatch),
   };

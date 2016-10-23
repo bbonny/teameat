@@ -12,6 +12,10 @@ const GET_PLACES_SENDING = 'GET_PLACES_SENDING';
 const GET_PLACES_SUCCESS = 'GET_PLACES_SUCCESS';
 const GET_PLACES_FAILURE = 'GET_PLACES_FAILURE';
 
+const GET_WORK_ADDRESS_SENDING = 'GET_WORK_ADDRESS_SENDING';
+const GET_WORK_ADDRESS_SUCCESS = 'GET_WORK_ADDRESS_SUCCESS';
+const GET_WORK_ADDRESS_FAILURE = 'GET_WORK_ADDRESS_FAILURE';
+
 const SET_WORK_ADDRESS_SENDING = 'SET_WORK_ADDRESS_SENDING';
 const SET_WORK_ADDRESS_SUCCESS = 'SET_WORK_ADDRESS_SUCCESS';
 const SET_WORK_ADDRESS_FAILURE = 'SET_WORK_ADDRESS_FAILURE';
@@ -39,6 +43,15 @@ function setWorkAddressRequest(dispatch) {
   };
 }
 
+function getWorkAddressRequest(dispatch) {
+  return () => {
+    const action = {
+      types: [GET_WORK_ADDRESS_SENDING, GET_WORK_ADDRESS_SUCCESS, GET_WORK_ADDRESS_FAILURE],
+      promise: firebase.database().ref(`/users/${getUserId()}/workAddress`).once('value'),
+    };
+    dispatch(action);
+  };
+}
 function addPlaceRequest(dispatch) {
   return (place) => {
     const updates = {
@@ -76,6 +89,7 @@ export const actions = {
   addPlaceRequest,
   deletePlaceRequest,
   getPlacesRequest,
+  getWorkAddressRequest,
   setWorkAddressRequest,
 };
 
@@ -156,6 +170,33 @@ function placesReducer(state = initialState, action) {
           sending: false,
         },
       };
+    case GET_WORK_ADDRESS_SENDING:
+      return {
+        ...state,
+        getWorkAddress: {
+          ...state.getWorkAddress,
+          error: '',
+          sending: true,
+        },
+      };
+    case GET_WORK_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        getWorkAddress: {
+          error: '',
+          data: action.result.val(),
+          sending: false,
+        },
+      };
+    case GET_WORK_ADDRESS_FAILURE:
+      return {
+        ...state,
+        getWorkAddress: {
+          error: 'error',
+          data: undefined,
+          sending: false,
+        },
+      };
     case SET_WORK_ADDRESS_SENDING:
       return {
         ...state,
@@ -198,6 +239,11 @@ const initialState = fromJS({
     error: '',
     sending: false,
     data: [],
+  },
+  getWorkAddress: {
+    error: '',
+    sending: false,
+    data: undefined,
   },
   setWorkAddress: {
     error: '',
