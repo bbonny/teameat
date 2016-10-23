@@ -12,6 +12,10 @@ const GET_PLACES_SENDING = 'GET_PLACES_SENDING';
 const GET_PLACES_SUCCESS = 'GET_PLACES_SUCCESS';
 const GET_PLACES_FAILURE = 'GET_PLACES_FAILURE';
 
+const SET_WORK_ADDRESS_SENDING = 'SET_WORK_ADDRESS_SENDING';
+const SET_WORK_ADDRESS_SUCCESS = 'SET_WORK_ADDRESS_SUCCESS';
+const SET_WORK_ADDRESS_FAILURE = 'SET_WORK_ADDRESS_FAILURE';
+
 const firebase = window.firebase;
 
 const getUserId = () => {
@@ -21,10 +25,24 @@ const getUserId = () => {
   return uid;
 };
 
+function setWorkAddressRequest(dispatch) {
+  return (address) => {
+    console.log(address);
+    const updates = {
+      [`/users/${getUserId()}/workAddress`]: address,
+    };
+    const action = {
+      types: [SET_WORK_ADDRESS_SENDING, SET_WORK_ADDRESS_SUCCESS, SET_WORK_ADDRESS_FAILURE],
+      promise: firebase.database().ref().update(updates),
+    };
+    dispatch(action);
+  };
+}
+
 function addPlaceRequest(dispatch) {
   return (place) => {
     const updates = {
-      [`/users/${getUserId()}/restaurants/${place.placeId}`]: { place },
+      [`/users/${getUserId()}/restaurants/${place.placeId}`]: place,
     };
     const action = {
       types: [ADD_PLACE_SENDING, ADD_PLACE_SUCCESS, ADD_PLACE_FAILURE],
@@ -58,6 +76,7 @@ export const actions = {
   addPlaceRequest,
   deletePlaceRequest,
   getPlacesRequest,
+  setWorkAddressRequest,
 };
 
 function placesReducer(state = initialState, action) {
@@ -137,6 +156,30 @@ function placesReducer(state = initialState, action) {
           sending: false,
         },
       };
+    case SET_WORK_ADDRESS_SENDING:
+      return {
+        ...state,
+        setWorkAddress: {
+          error: '',
+          sending: true,
+        },
+      };
+    case SET_WORK_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        setWorkAddress: {
+          error: '',
+          sending: false,
+        },
+      };
+    case SET_WORK_ADDRESS_FAILURE:
+      return {
+        ...state,
+        setWorkAddress: {
+          error: 'error',
+          sending: false,
+        },
+      };
     default:
       return state;
   }
@@ -155,6 +198,10 @@ const initialState = fromJS({
     error: '',
     sending: false,
     data: [],
+  },
+  setWorkAddress: {
+    error: '',
+    sending: false,
   },
 });
 

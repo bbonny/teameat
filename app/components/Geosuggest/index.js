@@ -111,7 +111,6 @@ class Geosuggest extends React.Component { // eslint-disable-line react/prefer-s
       suggests.push({
         label: suggest.description,
         placeId: suggest.place_id,
-        isFixture: false,
       });
     });
 
@@ -123,8 +122,7 @@ class Geosuggest extends React.Component { // eslint-disable-line react/prefer-s
 
     if (activeSuggest) {
       const newSuggest = suggests.find((listedSuggest) =>
-        activeSuggest.placeId === listedSuggest.placeId &&
-        activeSuggest.isFixture === listedSuggest.isFixture
+        activeSuggest.placeId === listedSuggest.placeId
       );
 
       activeSuggest = newSuggest || null;
