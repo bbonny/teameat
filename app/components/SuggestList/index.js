@@ -48,7 +48,7 @@ class SuggestList extends React.Component { // eslint-disable-line react/prefer-
 }
 
 SuggestList.propTypes = {
-  activeSuggest: React.PropTypes.bool,
+  activeSuggest: React.PropTypes.object,
   isHidden: React.PropTypes.bool,
   onSuggestMouseDown: React.PropTypes.func,
   onSuggestMouseOut: React.PropTypes.func,

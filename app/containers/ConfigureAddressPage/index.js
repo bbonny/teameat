@@ -21,23 +21,27 @@ export class ConfigureAddressPage extends React.Component { // eslint-disable-li
     }
   }
   render() {
+    if (!this.props.getWorkAddress || this.props.getWorkAddress.sending) { return <div />; }
     return (
       <div className={styles.configureAddressPage}>
-        <Geosuggest
-          country="fr"
-          onSelect={(place) => this.props.setWorkAddressRequest(place)}
-        />
-        { this.props.getWorkAddress && !this.props.getWorkAddress.sending &&
+        { this.props.getWorkAddress &&
           <div>
           {this.props.getWorkAddress.data ?
           (
-            <div>{ this.props.getWorkAddress.data.label }</div>
+            <div>
+              <FormattedMessage {...messages.workAdress} />
+              { this.props.getWorkAddress.data.label }
+            </div>
           ) : (
             <FormattedMessage {...messages.noWorkAdress} />
           )
           }
           </div>
         }
+        <Geosuggest
+          country="fr"
+          onSelect={(place) => this.props.setWorkAddressRequest(place)}
+        />
       </div>
     );
   }

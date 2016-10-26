@@ -14,4 +14,8 @@ export default defineMessages({
     id: 'app.components.ConfigureAddressPage.noWorkAdress',
     defaultMessage: 'You do not have a work address configured yet !',
   },
+  workAdress: {
+    id: 'app.components.ConfigureAddressPage.workAdress',
+    defaultMessage: 'Your current work adress is: ',
+  },
 });
