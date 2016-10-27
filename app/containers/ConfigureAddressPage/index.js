@@ -16,7 +16,10 @@ export class ConfigureAddressPage extends React.Component { // eslint-disable-li
     this.props.getWorkAddressRequest();
   }
   componentWillReceiveProps(newProps) {
-    if ((this.props.setWorkAddress && this.props.setWorkAddress.sending && !newProps.setWorkAddress.sending)) {
+    if ((this.props.setWorkAddress && this.props.setWorkAddress.sending && !newProps.setWorkAddress.sending) ||
+      (this.props.signIn && this.props.signIn.sending && !newProps.signIn.sending) ||
+      (this.props.user !== newProps.user)
+    ) {
       this.props.getWorkAddressRequest();
     }
   }
@@ -52,6 +55,8 @@ ConfigureAddressPage.propTypes = {
   getWorkAddressRequest: React.PropTypes.func,
   getWorkAddress: React.PropTypes.object,
   setWorkAddress: React.PropTypes.object,
+  signIn: React.PropTypes.object,
+  user: React.PropTypes.object,
 };
 
 const mapStateToProps = createSelector(

@@ -31,7 +31,6 @@ const getUserId = () => {
 
 function setWorkAddressRequest(dispatch) {
   return (address) => {
-    console.log(address);
     const updates = {
       [`/users/${getUserId()}/workAddress`]: address,
     };

@@ -28,6 +28,9 @@ export class Header extends React.Component { // eslint-disable-line react/prefe
   goToHomePage = () => {
     this.props.dispatch(push('/'));
   }
+  goToConfigureAddressPage = () => {
+    this.props.dispatch(push('/configure'));
+  }
   render() {
     return (
       <div className={styles.header}>
@@ -35,6 +38,15 @@ export class Header extends React.Component { // eslint-disable-line react/prefe
           <FormattedMessage {...messages.header}>
             {(message) =>
               <button className={styles.goToHomePageButton} onClick={this.goToHomePage}>
+                { message }
+              </button>
+            }
+          </FormattedMessage>
+        </div>
+        <div className={styles.configure}>
+          <FormattedMessage {...messages.configure}>
+            {(message) =>
+              <button className={styles.goToConfigureAddressPageButton} onClick={this.goToConfigureAddressPage}>
                 { message }
               </button>
             }
